@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iss.mapper.BookMapper">
+	<resultMap id="BaseResultMap" type="com.iss.pojo.Book">
+		<constructor>
+			<idArg column="bid" jdbcType="CHAR" javaType="java.lang.String" />
+			<arg column="name" jdbcType="CHAR" javaType="java.lang.String" />
+			<arg column="price" jdbcType="REAL" javaType="java.lang.Float" />
+			<arg column="discountprice" jdbcType="REAL" javaType="java.lang.Float" />
+			<arg column="imgurl" jdbcType="CHAR" javaType="java.lang.String" />
+			<arg column="detail" jdbcType="VARCHAR" javaType="java.lang.String" />
+			<arg column="discount" jdbcType="REAL" javaType="java.lang.Float" />
+			<arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+			<arg column="type" jdbcType="CHAR" javaType="java.lang.String" />
+			<arg column="limittime" jdbcType="CHAR" javaType="java.lang.String" />
+			<arg column="specialty" jdbcType="INTEGER" javaType="java.lang.Integer" />
+			<arg column="grade" jdbcType="INTEGER" javaType="java.lang.Integer" />
+			<arg column="author" jdbcType="CHAR" javaType="java.lang.String" />
+			<arg column="press" jdbcType="CHAR" javaType="java.lang.String" />
+			<arg column="pubdate" jdbcType="CHAR" javaType="java.lang.String" />
+			<arg column="isbn" jdbcType="CHAR" javaType="java.lang.String" />
+			<arg column="credit" jdbcType="INTEGER" javaType="java.lang.Integer" />
+			<arg column="sellername" jdbcType="CHAR" javaType="java.lang.String" />
+			<arg column="uploadbooktime" jdbcType="CHAR" javaType="java.lang.String" />
+			<arg column="homeimageurl" jdbcType="VARCHAR" javaType="java.lang.String" />
+			<arg column="stock" jdbcType="INTEGER" javaType="java.lang.Integer" />
+			<arg column="exchangable" jdbcType="INTEGER" javaType="java.lang.Integer" />
+			<arg column="sold" jdbcType="INTEGER" javaType="java.lang.Integer" />
+			<arg column="collection" jdbcType="INTEGER" javaType="java.lang.Integer" />
+		</constructor>
+	</resultMap>
+	<sql id="Base_Column_List">
+		bid, name, price, discountprice, imgurl, detail, discount,
+		state, type,
+		limittime,
+		specialty, grade, author, press, pubdate, isbn,
+		credit, sellername,
+		uploadbooktime,
+		homeimageurl, stock, exchangable,
+		sold, collection
+	</sql>
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from book
+		where bid = #{bid,jdbcType=CHAR}
+	</select>
+	
+	<select id="selectAllBookByGrade" resultType="com.iss.pojo.Book"
+		parameterType="java.lang.Integer">
+		select
+		bid,name,price,discount,imgurl,specialty, sold,collection from book
+		where grade=#{grade,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectAllBookBysp" resultType="com.iss.pojo.Book"
+		parameterType="java.lang.Integer">
+		select
+		bid,name,price,discount,imgurl,specialty, sold,collection from book
+		where specialty=#{specialty,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectAndSort" resultType="com.iss.pojo.Book"
+		parameterType="com.iss.pojo.Book">
+		select
+		bid,name,price,discount,imgurl,specialty, sold,collection from book
+		where
+		<if test="grade != null">
+			grade=#{grade,jdbcType=INTEGER}
+		</if>
+		<if test="specialty != null">
+			specialty=#{specialty,jdbcType=INTEGER}
+		</if>
+		
+		<if test="sold != null" >
+				order by sold desc 
+		</if>
+		<if test="price != null" >
+				order by price desc 
+		</if>	
+		<if test="uploadbooktime != null" >
+				order by uploadbooktime desc 
+		</if>	
+				
+	</select>
+	
+	<select id="selectAndSort2" resultType="com.iss.pojo.Book"
+		parameterType="com.iss.pojo.Book">
+		select
+		bid,name,price,discount,imgurl,specialty, sold,collection from book
+		where
+		<if test="grade != null">
+			grade=#{grade,jdbcType=INTEGER}
+		</if>
+		<if test="specialty != null">
+			specialty=#{specialty,jdbcType=INTEGER}
+		</if>
+		
+		<if test="sold != null" >
+				order by sold asc 
+		</if>
+		<if test="price != null" >
+				order by price asc 
+		</if>	
+		<if test="uploadbooktime != null" >
+				order by uploadbooktime asc 
+		</if>	
+				
+	</select>
+	
+	<select id="sortByKey" resultType="com.iss.pojo.Book"
+		parameterType="java.lang.String">
+		select
+		bid,name,price,discount,imgurl,specialty, sold,collection from book
+		where  
+			 name like CONCAT(CONCAT('%',#{text}), '%') or detail like CONCAT(CONCAT('%',#{text}), '%') 
+			 or type like CONCAT('%',CONCAT(#{text}), '%') or author like CONCAT('%',CONCAT(#{text}), '%') 
+	</select>
+	
+	
+	<select id="sortByKey1" resultType="com.iss.pojo.Book"
+		parameterType="com.iss.vo.title_sort_data">
+		select
+		bid,name,price,discount,imgurl,specialty, sold,collection from book
+		where  
+			 name like CONCAT(CONCAT('%',#{key}), '%') or detail like CONCAT(CONCAT('%',#{key}), '%') 
+			 or type like CONCAT('%',CONCAT(#{key}, '%')) or author like CONCAT('%',CONCAT(#{key}, '%'))
+			 
+		<if test="book.sold != null" >
+				order by sold desc 
+		</if>
+		<if test="book.price != null" >
+				order by price desc 
+		</if>	
+		<if test="book.uploadbooktime != null" >
+				order by uploadbooktime desc 
+		</if>	 
+	</select>
+	
+	<select id="sortByKey2" resultType="com.iss.pojo.Book"
+		parameterType="com.iss.vo.title_sort_data">
+		select
+		bid,name,price,discount,imgurl,specialty, sold,collection from book
+		where  
+			 name like CONCAT(CONCAT('%',#{key}), '%') or detail like CONCAT(CONCAT('%',#{key}), '%') 
+			 or type like CONCAT('%',CONCAT(#{key}, '%')) or author like CONCAT('%',CONCAT(#{key}, '%'))
+			 
+		<if test="book.sold != null" >
+				order by sold asc 
+		</if>
+		<if test="book.price != null" >
+				order by price asc 
+		</if>	
+		<if test="book.uploadbooktime != null" >
+				order by uploadbooktime asc 
+		</if>	
+	</select>
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from book
+		where bid = #{bid,jdbcType=CHAR}
+	</delete>
+	<insert id="insert" parameterType="com.iss.pojo.Book">
+		insert into book (bid, name,
+		price, discountprice,
+		imgurl, detail, discount,
+		state, type, limittime,
+		specialty,
+		grade, author, press, pubdate,
+		isbn, credit, sellername,
+		uploadbooktime, homeimageurl, stock,
+		exchangable, sold, collection
+		)
+		values (#{bid,jdbcType=CHAR}, #{name,jdbcType=CHAR},
+		#{price,jdbcType=REAL},
+		#{discountprice,jdbcType=REAL},
+		#{imgurl,jdbcType=CHAR}, #{detail,jdbcType=VARCHAR},
+		#{discount,jdbcType=REAL},
+		#{state,jdbcType=INTEGER},
+		#{type,jdbcType=CHAR},
+		#{limittime,jdbcType=CHAR},
+		#{specialty,jdbcType=INTEGER},
+		#{grade,jdbcType=INTEGER},
+		#{author,jdbcType=CHAR},
+		#{press,jdbcType=CHAR},
+		#{pubdate,jdbcType=CHAR},
+		#{isbn,jdbcType=CHAR},
+		#{credit,jdbcType=INTEGER},
+		#{sellername,jdbcType=CHAR},
+		#{uploadbooktime,jdbcType=CHAR}, #{homeimageurl,jdbcType=VARCHAR},
+		#{stock,jdbcType=INTEGER},
+		#{exchangable,jdbcType=INTEGER},
+		#{sold,jdbcType=INTEGER},
+		#{collection,jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.iss.pojo.Book">
+		insert into book
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="bid != null">
+				bid,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="discountprice != null">
+				discountprice,
+			</if>
+			<if test="imgurl != null">
+				imgurl,
+			</if>
+			<if test="detail != null">
+				detail,
+			</if>
+			<if test="discount != null">
+				discount,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="limittime != null">
+				limittime,
+			</if>
+			<if test="specialty != null">
+				specialty,
+			</if>
+			<if test="grade != null">
+				grade,
+			</if>
+			<if test="author != null">
+				author,
+			</if>
+			<if test="press != null">
+				press,
+			</if>
+			<if test="pubdate != null">
+				pubdate,
+			</if>
+			<if test="isbn != null">
+				isbn,
+			</if>
+			<if test="credit != null">
+				credit,
+			</if>
+			<if test="sellername != null">
+				sellername,
+			</if>
+			<if test="uploadbooktime != null">
+				uploadbooktime,
+			</if>
+			<if test="homeimageurl != null">
+				homeimageurl,
+			</if>
+			<if test="stock != null">
+				stock,
+			</if>
+			<if test="exchangable != null">
+				exchangable,
+			</if>
+			<if test="sold != null">
+				sold,
+			</if>
+			<if test="collection != null">
+				collection,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bid != null">
+				#{bid,jdbcType=CHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=CHAR},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=REAL},
+			</if>
+			<if test="discountprice != null">
+				#{discountprice,jdbcType=REAL},
+			</if>
+			<if test="imgurl != null">
+				#{imgurl,jdbcType=CHAR},
+			</if>
+			<if test="detail != null">
+				#{detail,jdbcType=VARCHAR},
+			</if>
+			<if test="discount != null">
+				#{discount,jdbcType=REAL},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=CHAR},
+			</if>
+			<if test="limittime != null">
+				#{limittime,jdbcType=CHAR},
+			</if>
+			<if test="specialty != null">
+				#{specialty,jdbcType=INTEGER},
+			</if>
+			<if test="grade != null">
+				#{grade,jdbcType=INTEGER},
+			</if>
+			<if test="author != null">
+				#{author,jdbcType=CHAR},
+			</if>
+			<if test="press != null">
+				#{press,jdbcType=CHAR},
+			</if>
+			<if test="pubdate != null">
+				#{pubdate,jdbcType=CHAR},
+			</if>
+			<if test="isbn != null">
+				#{isbn,jdbcType=CHAR},
+			</if>
+			<if test="credit != null">
+				#{credit,jdbcType=INTEGER},
+			</if>
+			<if test="sellername != null">
+				#{sellername,jdbcType=CHAR},
+			</if>
+			<if test="uploadbooktime != null">
+				#{uploadbooktime,jdbcType=CHAR},
+			</if>
+			<if test="homeimageurl != null">
+				#{homeimageurl,jdbcType=VARCHAR},
+			</if>
+			<if test="stock != null">
+				#{stock,jdbcType=INTEGER},
+			</if>
+			<if test="exchangable != null">
+				#{exchangable,jdbcType=INTEGER},
+			</if>
+			<if test="sold != null">
+				#{sold,jdbcType=INTEGER},
+			</if>
+			<if test="collection != null">
+				#{collection,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.iss.pojo.Book">
+		update book
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=CHAR},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=REAL},
+			</if>
+			<if test="discountprice != null">
+				discountprice = #{discountprice,jdbcType=REAL},
+			</if>
+			<if test="imgurl != null">
+				imgurl = #{imgurl,jdbcType=CHAR},
+			</if>
+			<if test="detail != null">
+				detail = #{detail,jdbcType=VARCHAR},
+			</if>
+			<if test="discount != null">
+				discount = #{discount,jdbcType=REAL},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=CHAR},
+			</if>
+			<if test="limittime != null">
+				limittime = #{limittime,jdbcType=CHAR},
+			</if>
+			<if test="specialty != null">
+				specialty = #{specialty,jdbcType=INTEGER},
+			</if>
+			<if test="grade != null">
+				grade = #{grade,jdbcType=INTEGER},
+			</if>
+			<if test="author != null">
+				author = #{author,jdbcType=CHAR},
+			</if>
+			<if test="press != null">
+				press = #{press,jdbcType=CHAR},
+			</if>
+			<if test="pubdate != null">
+				pubdate = #{pubdate,jdbcType=CHAR},
+			</if>
+			<if test="isbn != null">
+				isbn = #{isbn,jdbcType=CHAR},
+			</if>
+			<if test="credit != null">
+				credit = #{credit,jdbcType=INTEGER},
+			</if>
+			<if test="sellername != null">
+				sellername = #{sellername,jdbcType=CHAR},
+			</if>
+			<if test="uploadbooktime != null">
+				uploadbooktime = #{uploadbooktime,jdbcType=CHAR},
+			</if>
+			<if test="homeimageurl != null">
+				homeimageurl = #{homeimageurl,jdbcType=VARCHAR},
+			</if>
+			<if test="stock != null">
+				stock = #{stock,jdbcType=INTEGER},
+			</if>
+			<if test="exchangable != null">
+				exchangable = #{exchangable,jdbcType=INTEGER},
+			</if>
+			<if test="sold != null">
+				sold = #{sold,jdbcType=INTEGER},
+			</if>
+			<if test="collection != null">
+				collection = #{collection,jdbcType=INTEGER},
+			</if>
+		</set>
+		where bid = #{bid,jdbcType=CHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.iss.pojo.Book">
+		update book
+		set
+		name = #{name,jdbcType=CHAR},
+		price = #{price,jdbcType=REAL},
+		discountprice = #{discountprice,jdbcType=REAL},
+		imgurl =
+		#{imgurl,jdbcType=CHAR},
+		detail = #{detail,jdbcType=VARCHAR},
+		discount =
+		#{discount,jdbcType=REAL},
+		state = #{state,jdbcType=INTEGER},
+		type =
+		#{type,jdbcType=CHAR},
+		limittime = #{limittime,jdbcType=CHAR},
+		specialty = #{specialty,jdbcType=INTEGER},
+		grade =
+		#{grade,jdbcType=INTEGER},
+		author = #{author,jdbcType=CHAR},
+		press =
+		#{press,jdbcType=CHAR},
+		pubdate = #{pubdate,jdbcType=CHAR},
+		isbn =
+		#{isbn,jdbcType=CHAR},
+		credit = #{credit,jdbcType=INTEGER},
+		sellername =
+		#{sellername,jdbcType=CHAR},
+		uploadbooktime =
+		#{uploadbooktime,jdbcType=CHAR},
+		homeimageurl =
+		#{homeimageurl,jdbcType=VARCHAR},
+		stock = #{stock,jdbcType=INTEGER},
+		exchangable = #{exchangable,jdbcType=INTEGER},
+		sold =
+		#{sold,jdbcType=INTEGER},
+		collection = #{collection,jdbcType=INTEGER}
+		where bid = #{bid,jdbcType=CHAR}
+	</update>
+	<!-- 自定义接口：根据条件查询排序 -->
+	<!-- 最新上架前七位 -->
+	<select id="selectBooksByTime" resultType="com.iss.pojo.Book" >
+		select
+		bid,name,price,discount,imgurl,specialty, sold,collection from book
+		ORDER BY str_to_date(uploadbooktime,'%Y-%m-%d') DESC limit 0,7
+	</select>
+	<!-- 热销排行前七位 -->
+	<select id="selectBooksBySold" resultType="com.iss.pojo.Book">
+		select
+		bid,name,price,discount,imgurl,specialty, sold,collection from book
+		order by sold desc limit 0,7
+	</select>
+
+	<select id="selectBooksByDiscount" resultType="com.iss.pojo.Book">
+		select
+		bid,name,price,discount,imgurl,specialty, sold,collection from book
+		order by discount limit 0,10
+	</select>
+
+	<select id="selectBooksBySpecialty" resultType="com.iss.pojo.Book">
+		select bid,name,price,discount,imgurl,specialty, sold,collection
+		from book b1 where (select count(*) from book b2 where
+		b2.specialty = b1.specialty and b1.sold &lt; b2.sold ) &lt; 10 
+		order by specialty desc,sold desc
+	</select>
+</mapper>

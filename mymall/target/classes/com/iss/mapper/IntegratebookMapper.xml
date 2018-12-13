@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iss.mapper.IntegratebookMapper" >
+  <resultMap id="BaseResultMap" type="com.iss.pojo.Integratebook" >
+    <constructor >
+      <idArg column="integratebook_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="integratebook_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="integratebook_image" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="integratebook_value" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    integratebook_id, integratebook_name, integratebook_image, integratebook_value
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from integratebook
+    where integratebook_id = #{integratebookId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from integratebook
+    where integratebook_id = #{integratebookId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.iss.pojo.Integratebook" >
+    insert into integratebook (integratebook_id, integratebook_name, 
+      integratebook_image, integratebook_value)
+    values (#{integratebookId,jdbcType=INTEGER}, #{integratebookName,jdbcType=VARCHAR}, 
+      #{integratebookImage,jdbcType=VARCHAR}, #{integratebookValue,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.iss.pojo.Integratebook" >
+    insert into integratebook
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="integratebookId != null" >
+        integratebook_id,
+      </if>
+      <if test="integratebookName != null" >
+        integratebook_name,
+      </if>
+      <if test="integratebookImage != null" >
+        integratebook_image,
+      </if>
+      <if test="integratebookValue != null" >
+        integratebook_value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="integratebookId != null" >
+        #{integratebookId,jdbcType=INTEGER},
+      </if>
+      <if test="integratebookName != null" >
+        #{integratebookName,jdbcType=VARCHAR},
+      </if>
+      <if test="integratebookImage != null" >
+        #{integratebookImage,jdbcType=VARCHAR},
+      </if>
+      <if test="integratebookValue != null" >
+        #{integratebookValue,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iss.pojo.Integratebook" >
+    update integratebook
+    <set >
+      <if test="integratebookName != null" >
+        integratebook_name = #{integratebookName,jdbcType=VARCHAR},
+      </if>
+      <if test="integratebookImage != null" >
+        integratebook_image = #{integratebookImage,jdbcType=VARCHAR},
+      </if>
+      <if test="integratebookValue != null" >
+        integratebook_value = #{integratebookValue,jdbcType=INTEGER},
+      </if>
+    </set>
+    where integratebook_id = #{integratebookId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iss.pojo.Integratebook" >
+    update integratebook
+    set integratebook_name = #{integratebookName,jdbcType=VARCHAR},
+      integratebook_image = #{integratebookImage,jdbcType=VARCHAR},
+      integratebook_value = #{integratebookValue,jdbcType=INTEGER}
+    where integratebook_id = #{integratebookId,jdbcType=INTEGER}
+  </update>
+</mapper>

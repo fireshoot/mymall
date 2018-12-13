@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iss.mapper.CollectMapper" >
+  <resultMap id="BaseResultMap" type="com.iss.pojo.Collect" >
+    <constructor >
+      <idArg column="collect_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="collect_bookid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="collect_userid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    collect_id, collect_bookid, collect_userid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from collect
+    where collect_id = #{collectId,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="selectByBidAndCid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from collect
+    where collect_bookid = #{collect_bookid,jdbcType=INTEGER} and collect_userid = #{collect_userid,jdbcType=INTEGER}
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from collect
+    where collect_id = #{collectId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.iss.pojo.Collect" >
+    insert into collect (collect_id, collect_bookid, collect_userid
+      )
+    values (#{collectId,jdbcType=INTEGER}, #{collectBookid,jdbcType=INTEGER}, #{collectUserid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.iss.pojo.Collect" >
+    insert into collect
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="collectId != null" >
+        collect_id,
+      </if>
+      <if test="collectBookid != null" >
+        collect_bookid,
+      </if>
+      <if test="collectUserid != null" >
+        collect_userid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="collectId != null" >
+        #{collectId,jdbcType=INTEGER},
+      </if>
+      <if test="collectBookid != null" >
+        #{collectBookid,jdbcType=INTEGER},
+      </if>
+      <if test="collectUserid != null" >
+        #{collectUserid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iss.pojo.Collect" >
+    update collect
+    <set >
+      <if test="collectBookid != null" >
+        collect_bookid = #{collectBookid,jdbcType=INTEGER},
+      </if>
+      <if test="collectUserid != null" >
+        collect_userid = #{collectUserid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where collect_id = #{collectId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iss.pojo.Collect" >
+    update collect
+    set collect_bookid = #{collectBookid,jdbcType=INTEGER},
+      collect_userid = #{collectUserid,jdbcType=INTEGER}
+    where collect_id = #{collectId,jdbcType=INTEGER}
+  </update>
+</mapper>

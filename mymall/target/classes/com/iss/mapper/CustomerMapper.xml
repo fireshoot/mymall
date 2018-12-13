@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iss.mapper.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.iss.pojo.Customer" >
+    <constructor >
+      <idArg column="cid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="nickname" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="password" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="phone" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="qq" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="cname" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="address" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="city" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="district" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="class" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="grade" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="postcode" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="province" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="ctype" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="school" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="credit" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="picurl" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="email" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="birthday" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="salt" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="gender" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cid, nickname, password, phone, qq, cname, address, city, district, class, grade, 
+    postcode, province, ctype, school, credit, picurl, email, birthday, salt, gender
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from customer
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.iss.pojo.Customer" >
+    insert into customer (cid, nickname, password, 
+      phone, qq, cname, address, 
+      city, district, class, grade, 
+      postcode, province, ctype, school, 
+      credit, picurl, email, birthday, 
+      salt, gender)
+    values (#{cid,jdbcType=INTEGER}, #{nickname,jdbcType=CHAR}, #{password,jdbcType=CHAR}, 
+      #{phone,jdbcType=CHAR}, #{qq,jdbcType=CHAR}, #{cname,jdbcType=CHAR}, #{address,jdbcType=CHAR}, 
+      #{city,jdbcType=CHAR}, #{district,jdbcType=CHAR}, #{class_,jdbcType=CHAR}, #{grade,jdbcType=CHAR}, 
+      #{postcode,jdbcType=CHAR}, #{province,jdbcType=CHAR}, #{ctype,jdbcType=CHAR}, #{school,jdbcType=CHAR}, 
+      #{credit,jdbcType=INTEGER}, #{picurl,jdbcType=CHAR}, #{email,jdbcType=CHAR}, #{birthday,jdbcType=CHAR}, 
+      #{salt,jdbcType=CHAR}, #{gender,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.iss.pojo.Customer" >
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="cname != null" >
+        cname,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="district != null" >
+        district,
+      </if>
+      <if test="class_ != null" >
+        class,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="postcode != null" >
+        postcode,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="ctype != null" >
+        ctype,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="credit != null" >
+        credit,
+      </if>
+      <if test="picurl != null" >
+        picurl,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="salt != null" >
+        salt,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=CHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=CHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=CHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=CHAR},
+      </if>
+      <if test="cname != null" >
+        #{cname,jdbcType=CHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=CHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=CHAR},
+      </if>
+      <if test="district != null" >
+        #{district,jdbcType=CHAR},
+      </if>
+      <if test="class_ != null" >
+        #{class_,jdbcType=CHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=CHAR},
+      </if>
+      <if test="postcode != null" >
+        #{postcode,jdbcType=CHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=CHAR},
+      </if>
+      <if test="ctype != null" >
+        #{ctype,jdbcType=CHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=CHAR},
+      </if>
+      <if test="credit != null" >
+        #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="picurl != null" >
+        #{picurl,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=CHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=CHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iss.pojo.Customer" >
+    update customer
+    <set >
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=CHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=CHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=CHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=CHAR},
+      </if>
+      <if test="cname != null" >
+        cname = #{cname,jdbcType=CHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=CHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=CHAR},
+      </if>
+      <if test="district != null" >
+        district = #{district,jdbcType=CHAR},
+      </if>
+      <if test="class_ != null" >
+        class = #{class_,jdbcType=CHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=CHAR},
+      </if>
+      <if test="postcode != null" >
+        postcode = #{postcode,jdbcType=CHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=CHAR},
+      </if>
+      <if test="ctype != null" >
+        ctype = #{ctype,jdbcType=CHAR},
+      </if>
+      <if test="school != null" >
+        school = #{school,jdbcType=CHAR},
+      </if>
+      <if test="credit != null" >
+        credit = #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="picurl != null" >
+        picurl = #{picurl,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=CHAR},
+      </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=CHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iss.pojo.Customer" >
+    update customer
+    set nickname = #{nickname,jdbcType=CHAR},
+      password = #{password,jdbcType=CHAR},
+      phone = #{phone,jdbcType=CHAR},
+      qq = #{qq,jdbcType=CHAR},
+      cname = #{cname,jdbcType=CHAR},
+      address = #{address,jdbcType=CHAR},
+      city = #{city,jdbcType=CHAR},
+      district = #{district,jdbcType=CHAR},
+      class = #{class_,jdbcType=CHAR},
+      grade = #{grade,jdbcType=CHAR},
+      postcode = #{postcode,jdbcType=CHAR},
+      province = #{province,jdbcType=CHAR},
+      ctype = #{ctype,jdbcType=CHAR},
+      school = #{school,jdbcType=CHAR},
+      credit = #{credit,jdbcType=INTEGER},
+      picurl = #{picurl,jdbcType=CHAR},
+      email = #{email,jdbcType=CHAR},
+      birthday = #{birthday,jdbcType=CHAR},
+      salt = #{salt,jdbcType=CHAR},
+      gender = #{gender,jdbcType=INTEGER}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  
+  <!--  自定义-->
+  <select id="selectByNameAndPassword" parameterType="string" resultType="com.iss.pojo.Customer">
+  select
+  <include refid="Base_Column_List"></include>
+  from customer
+  where cname= #{cname} and password = #{password}
+  </select>
+  
+   <select id="selectByPrimarybyName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where cname = #{cname,jdbcType=INTEGER}
+  </select>
+  
+  
+  </mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iss.mapper.QuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.iss.pojo.Question" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="cname" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="question1" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="answer1" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="question2" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="answer2" jdbcType="CHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cname, question1, answer1, question2, answer2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from question
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from question
+    where cname = #{cname,jdbcType=CHAR}
+  </select>
+  
+ 
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from question
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.iss.pojo.Question" >
+    insert into question (id, cname, question1, 
+      answer1, question2, answer2)
+    values (#{id,jdbcType=INTEGER}, #{cname,jdbcType=CHAR}, #{question1,jdbcType=CHAR}, 
+      #{answer1,jdbcType=CHAR}, #{question2,jdbcType=CHAR}, #{answer2,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.iss.pojo.Question" >
+    insert into question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cname != null" >
+        cname,
+      </if>
+      <if test="question1 != null" >
+        question1,
+      </if>
+      <if test="answer1 != null" >
+        answer1,
+      </if>
+      <if test="question2 != null" >
+        question2,
+      </if>
+      <if test="answer2 != null" >
+        answer2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cname != null" >
+        #{cname,jdbcType=CHAR},
+      </if>
+      <if test="question1 != null" >
+        #{question1,jdbcType=CHAR},
+      </if>
+      <if test="answer1 != null" >
+        #{answer1,jdbcType=CHAR},
+      </if>
+      <if test="question2 != null" >
+        #{question2,jdbcType=CHAR},
+      </if>
+      <if test="answer2 != null" >
+        #{answer2,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iss.pojo.Question" >
+    update question
+    <set >
+      <if test="cname != null" >
+        cname = #{cname,jdbcType=CHAR},
+      </if>
+      <if test="question1 != null" >
+        question1 = #{question1,jdbcType=CHAR},
+      </if>
+      <if test="answer1 != null" >
+        answer1 = #{answer1,jdbcType=CHAR},
+      </if>
+      <if test="question2 != null" >
+        question2 = #{question2,jdbcType=CHAR},
+      </if>
+      <if test="answer2 != null" >
+        answer2 = #{answer2,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iss.pojo.Question" >
+    update question
+    set cname = #{cname,jdbcType=CHAR},
+      question1 = #{question1,jdbcType=CHAR},
+      answer1 = #{answer1,jdbcType=CHAR},
+      question2 = #{question2,jdbcType=CHAR},
+      answer2 = #{answer2,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

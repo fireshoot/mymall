@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iss.mapper.ConvertibilityrecordMapper" >
+  <resultMap id="BaseResultMap" type="com.iss.pojo.Convertibilityrecord" >
+    <constructor >
+      <idArg column="convertibilityrecord_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="convertibilityrecord_bookid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="convertibilityrecord_userid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    convertibilityrecord_id, convertibilityrecord_bookid, convertibilityrecord_userid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from convertibilityrecord
+    where convertibilityrecord_id = #{convertibilityrecordId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from convertibilityrecord
+    where convertibilityrecord_id = #{convertibilityrecordId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.iss.pojo.Convertibilityrecord" >
+    insert into convertibilityrecord (convertibilityrecord_id, convertibilityrecord_bookid, 
+      convertibilityrecord_userid)
+    values (#{convertibilityrecordId,jdbcType=INTEGER}, #{convertibilityrecordBookid,jdbcType=INTEGER}, 
+      #{convertibilityrecordUserid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.iss.pojo.Convertibilityrecord" >
+    insert into convertibilityrecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="convertibilityrecordId != null" >
+        convertibilityrecord_id,
+      </if>
+      <if test="convertibilityrecordBookid != null" >
+        convertibilityrecord_bookid,
+      </if>
+      <if test="convertibilityrecordUserid != null" >
+        convertibilityrecord_userid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="convertibilityrecordId != null" >
+        #{convertibilityrecordId,jdbcType=INTEGER},
+      </if>
+      <if test="convertibilityrecordBookid != null" >
+        #{convertibilityrecordBookid,jdbcType=INTEGER},
+      </if>
+      <if test="convertibilityrecordUserid != null" >
+        #{convertibilityrecordUserid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iss.pojo.Convertibilityrecord" >
+    update convertibilityrecord
+    <set >
+      <if test="convertibilityrecordBookid != null" >
+        convertibilityrecord_bookid = #{convertibilityrecordBookid,jdbcType=INTEGER},
+      </if>
+      <if test="convertibilityrecordUserid != null" >
+        convertibilityrecord_userid = #{convertibilityrecordUserid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where convertibilityrecord_id = #{convertibilityrecordId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iss.pojo.Convertibilityrecord" >
+    update convertibilityrecord
+    set convertibilityrecord_bookid = #{convertibilityrecordBookid,jdbcType=INTEGER},
+      convertibilityrecord_userid = #{convertibilityrecordUserid,jdbcType=INTEGER}
+    where convertibilityrecord_id = #{convertibilityrecordId,jdbcType=INTEGER}
+  </update>
+</mapper>
